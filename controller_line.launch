@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<?ignore
+	Script test
+?>
+
+<launch>
+  <include file="$(find me416_lab)/launch/camera.launch"/>
+  <node pkg="me416_lab" name="motor_command" type="motor_command.py"/>
+  <node pkg="me416_lab" name="image_segment_node" type="image_segment_node.py"/>
+  <node pkg="me416_lab" name="controller_line_node" type="controller_line_node.py" output="screen"/>
+</launch>
