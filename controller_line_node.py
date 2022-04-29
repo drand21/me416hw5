@@ -46,7 +46,7 @@ def main():
     stamped_msg_register = mcm.StampedMsgRegister()
     rospy.init_node('main')
     rospy.Subscriber('/image/centroid', PointStamped, callback=callback, queue_size=1, buff_size=2**18)
-    pub = rospy.Publisher('/robot_twist', Twist, queue_size=10)
+    pub = rospy.Publisher('robot_twist', Twist, queue_size=10)
     pid = cr.PID(KP,KD,KI)
     
 
