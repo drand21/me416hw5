@@ -30,11 +30,11 @@ def callback(rosmsg):
     temp4 = temppoint.header.stamp
     time_delay = temp4-temp3
 
-    msg = Twist()
-    msg.linear.x = LIN_SPEED
+    msg = Twist()                   #creates Twist object
+    msg.linear.x = LIN_SPEED        #update x field of Twist
     msg.angular.z = cr.pid.proportional(error_signal) + cr.derivative(error_signal, time_delay) + cr.integral(error_signal, time_delay)
     
-    pub.publish(msg)
+    pub.publish(msg)            #publish to robot_twist
 
 
 def main():
@@ -43,11 +43,12 @@ def main():
     KP = 0
     KD = 0
     KI = 0
+    stamped_msg_register = mcm.StampedMsgRegister()
     rospy.init_node('main')
     rospy.Subscriber('/image/centroid', PointStamped, callback=callback, queue_size=1, buff_size=2**18)
-    pub = rospy.Publisher('robot_twist', Twist, queue_size=10)
+    pub = rospy.Publisher('/robot_twist', Twist, queue_size=10)
     pid = cr.PID(KP,KD,KI)
-    stamped_msg_register = mcm.StampedMsgRegister()
+    
 
     while not rospy.is_shutdown():
         rospy.spin()
